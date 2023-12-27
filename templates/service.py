@@ -1,5 +1,4 @@
-service_template = """
-package {parentPackageName}.{packageName};
+service_template = """package {parentPackageName}.{packageName};
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,4 @@
-controller_template = """
-package {parentPackageName}.{packageName};
+controller_template = """package {parentPackageName}.{packageName};
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;

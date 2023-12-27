@@ -1,5 +1,4 @@
-model_template = """
-package {parentPackageName}.{packageName};
+model_template = """package {parentPackageName}.{packageName};
 
 import jakarta.persistence.*;
 import lombok.Getter;
