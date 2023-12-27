@@ -1,7 +1,7 @@
 import os
 
 
-def get_parent_package_name(start: str):
+def try_get_parent_package_name(start: str):
     target = "java"
     path = start
     pack = []
