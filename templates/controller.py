@@ -1,3 +1,4 @@
+controller_template = """
 package {parentPackageName}.{packageName};
 
 import lombok.RequiredArgsConstructor;
@@ -10,3 +11,4 @@ import org.springframework.web.bind.annotation.RestController;
 public class {capitalizedPackageName}Controller {
     private final {capitalizedPackageName}Service {packageName}Service;
 }
+"""

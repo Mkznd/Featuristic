@@ -2,6 +2,8 @@ import typer
 from rich import print
 from rich.prompt import Prompt
 from pick import pick
+
+from features_list import features_list
 from package_finder import get_parent_package_name
 import os
 
@@ -41,8 +43,7 @@ def generate(name: str, features: list[str], parent_package: str):
         os.mkdir(f'./{name.lower()}')
 
     for feature in features:
-        with open(f'./templates/{feature.lower()}') as f:
-            template = f.read()
+        template = features_list[feature]
         content = parse_template(template, name, parent_package)
 
         if feature == 'Model':
