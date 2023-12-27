@@ -14,12 +14,18 @@ app = typer.Typer()
 
 @app.command()
 def gen(name: str = typer.Argument(None, help="Name of the package"),
-        all: bool = typer.Option(False, help="Generate all features", allow_dash=True)):
-    pick_feature_title = ('Pick [green bold]features[/green bold] of the module (press SPACE to mark,'
+        all: bool = typer.Option(False, help="Generate all features", allow_dash=True),
+        default_parent: bool = typer.Option(True, help="Use default parent package", allow_dash=True)):
+    pick_feature_title = ('Pick features of the module (press SPACE to mark,'
                           ' ENTER to proceed): ')
     feature_options = list(features_list.keys())  # TODO DTO, Mapper, etc.
 
     parent_package = get_parent_package_name()
+    if not default_parent:
+        parent_package = Prompt.ask(
+            "Please enter the name of the [#4B9CD3 bold]parent[/#4B9CD3 bold] package. Press ENTER for",
+            default=parent_package)
+
     name = get_new_package_name(name)
 
     if all:
@@ -36,7 +42,7 @@ def gen(name: str = typer.Argument(None, help="Name of the package"),
 
 def get_new_package_name(name):
     if name is None:
-        name = Prompt.ask("Enter the name of the [green bold]new[/ green bold] package")
+        name = Prompt.ask("Enter the name of the [#4B9CD3 bold]new[/#4B9CD3 bold] package")
     if not name:
         print("Name of the package cannot be empty.")
         abort()
@@ -52,14 +58,11 @@ def get_parent_package_name():
             "Could not find [red]java[/red] directory upstream."
             " Please generate the package under the [red]java[/red] directory.")
         abort()
-    parent_package = Prompt.ask(
-        "Please enter the name of the [green bold]parent[/green bold] package. Press ENTER for",
-        default=parent_package)
     return parent_package
 
 
 def generate_features(name: str, features: list[str], parent_package: str):
-    print(f"Generating [green bold]{name}[/green bold] package with a {', '.join(features)}")
+    print(f"Generating [#4B9CD3 bold]{name}[/#4B9CD3 bold] package with a {', '.join(features)}")
     if not os.path.exists(f'./{name.lower()}'):
         os.mkdir(f'./{name.lower()}')
 
@@ -73,6 +76,7 @@ def generate_features(name: str, features: list[str], parent_package: str):
             file_name = f'{name.capitalize()}{feature}.java'
         with open(f'./{name.lower()}/{file_name}', 'w') as f:
             f.write(content)
+    print("[green]Done! Happy hacking :)[/green]")
 
 
 def parse_template(content, name, parent_package):
